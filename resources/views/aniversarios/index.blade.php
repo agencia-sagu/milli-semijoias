@@ -8,10 +8,10 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
             <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Aniversariantes</h1>
-            <p class="text-slate-500 text-sm">Gestão de clientes e datas especiais da Lisy Modas.</p>
+            <p class="text-slate-500 text-sm">Gestão de clientes e datas especiais da Milli Semijóias</p>
         </div>
 
-        <button @click="open = true" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 group">
+        <button @click="open = true" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-pink-600 text-white rounded-xl font-bold text-sm hover:bg-pink-700 transition-all shadow-lg shadow-pink-100 group">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
@@ -24,16 +24,16 @@
 
         {{-- COLUNA: HOJE --}}
         <div class="lg:col-span-1 space-y-4">
-            <h2 class="text-sm font-black uppercase tracking-widest text-indigo-600 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
+            <h2 class="text-sm font-black uppercase tracking-widest text-pink-600 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-pink-600 animate-ping"></span>
                 Hoje ({{ now()->format('d/m') }})
             </h2>
 
             @forelse($aniversariantesHoje as $cliente)
-            <div class="bg-gradient-to-br from-indigo-600 to-violet-700 p-6 rounded-2xl shadow-xl shadow-indigo-100 relative overflow-hidden group">
+            <div class="bg-gradient-to-br from-pink-600 to-pink-700 p-6 rounded-2xl shadow-xl shadow-pink-100 relative overflow-hidden group">
                 <div class="relative z-10">
                     <h3 class="text-white font-bold text-lg">{{ $cliente->nome }}</h3>
-                    <p class="text-indigo-100 text-sm mb-4">Completando {{ $cliente->data_nascimento->age }} anos!</p>
+                    <p class="text-pink-100 text-sm mb-4">Completando {{ $cliente->data_nascimento->age }} anos!</p>
 
                     {{-- Note: Removi o link de WhatsApp pois você informou que removeu o campo --}}
                     <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 text-white rounded-xl text-xs font-black uppercase backdrop-blur-sm">
@@ -64,9 +64,9 @@
                                 <span class="font-bold text-slate-900">{{ $cliente->nome }}</span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <span class="inline-flex flex-col items-center justify-center w-12 h-12 bg-slate-100 rounded-xl group-hover:bg-indigo-50 transition-colors">
-                                    <span class="text-[10px] font-black uppercase text-slate-400 group-hover:text-indigo-600">Dia</span>
-                                    <span class="text-sm font-black text-slate-900 group-hover:text-indigo-600">{{ $cliente->data_nascimento->format('d') }}</span>
+                                <span class="inline-flex flex-col items-center justify-center w-12 h-12 bg-slate-100 rounded-xl group-hover:bg-pink-50 transition-colors">
+                                    <span class="text-[10px] font-black uppercase text-slate-400 group-hover:text-pink-600">Dia</span>
+                                    <span class="text-sm font-black text-slate-900 group-hover:text-pink-600">{{ $cliente->data_nascimento->format('d') }}</span>
                                 </span>
                             </td>
                         </tr>
@@ -165,17 +165,17 @@
                 <div>
                     <label class="block text-xs font-black uppercase text-slate-500 mb-1 ml-1">Nome Completo</label>
                     <input type="text" name="nome" required placeholder="Ex: Maria Oliveira"
-                        class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all text-slate-900 font-medium">
+                        class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition-all text-slate-900 font-medium">
                 </div>
 
                 <div>
                     <label class="block text-xs font-black uppercase text-slate-500 mb-1 ml-1">Data de Nascimento</label>
                     <input type="date" name="data_nascimento" required
-                        class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all text-slate-900 font-medium">
+                        class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition-all text-slate-900 font-medium">
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
+                    <button type="submit" class="w-full py-4 bg-pink-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-pink-700 transition-all shadow-lg shadow-pink-200">
                         Salvar Cliente
                     </button>
                 </div>

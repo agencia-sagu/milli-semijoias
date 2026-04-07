@@ -126,7 +126,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <p class="font-medium text-slate-900">Vencendo em breve</p>
+                            <p class="font-medium text-pink-500">Vencendo em breve</p>
                             <p class="text-sm text-slate-600 mt-1">
                                 {{ $vencendoEmBreve->count() }} pagamento(s) vencem nos próximos 7 dias
                             </p>
@@ -137,7 +137,7 @@
                                 $diasRestantes = now()->startOfDay()->diffInDays($parcela->data_vencimento);
                                 @endphp
                                 <div class="flex items-center justify-between text-sm bg-slate-50 p-2 rounded border border-slate-100">
-                                    <a class="text-violet-400 hover:underline font-medium" href="{{ route('vendas.show', $parcela->venda_id) }}">
+                                    <a class="text-pink-400 hover:underline font-medium" href="{{ route('vendas.show', $parcela->venda_id) }}">
                                         {{ $parcela->venda->cliente_nome }}
                                     </a>
                                     <div class="flex items-center gap-3">

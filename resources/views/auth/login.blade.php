@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lisy Modas - Login</title>
+    <title>Milli Semijóias - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -19,7 +19,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #e3b2ff67; 
+            background: #a7077f67; 
             padding: 20px;
         }
 
@@ -204,7 +204,8 @@
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                 </svg>
             </div>
-            <h1>Lisy Modas</h1>
+            <h1>Milli Semijóias
+</h1>
             <p>Acesso ao Painel</p>
         </div>
 
@@ -218,7 +219,7 @@
             <div class="input-group">
                 <label>E-mail</label>
                 <div class="input-field">
-                    <input type="email" name="email" value="{{ old('email') }}" placeholder="nome@lisymodas.com" required>
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="nome@gmail.com" required>
                 </div>
                 @error('email')
                 <div class="field-error">{{ $message }}</div>

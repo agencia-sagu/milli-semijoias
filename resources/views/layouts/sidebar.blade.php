@@ -4,8 +4,8 @@
 
     <div class="p-6 flex items-center justify-between border-b border-slate-50 mb-4">
         <div class="flex items-center gap-2">
-            <span class="text-xl font-bold text-slate-900 tracking-tight">Lisy</span>
-            <span class="text-xl font-bold text-violet-500">Modas</span>
+            <span class="text-xl font-bold text-slate-900 tracking-tight">Milli</span>
+            <span class="text-xl font-bold text-pink-600">Semijóias</span>
         </div>
 
         <button @click="sidebarOpen = false" class="lg:hidden p-2 text-slate-400 hover:text-red-500 transition-colors">
@@ -17,7 +17,7 @@
 
     <nav class="px-4 space-y-1">
         <a href="{{ route('dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->is('/') ? 'bg-blue-50 text-violet-400' : 'text-slate-600 hover:bg-slate-50' }}">
+            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->is('/') ? 'bg-pink-50 text-pink-400' : 'text-slate-600 hover:bg-slate-50' }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                 <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
                 <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -26,7 +26,7 @@
         </a>
 
         <a href="{{ route('vendas.create') }}"
-            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->routeIs('vendas.create') ? 'bg-blue-50 text-violet-400' : 'text-slate-600 hover:bg-slate-50' }}">
+            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->routeIs('vendas.create') ? 'bg-pink-50 text-pink-400' : 'text-slate-600 hover:bg-slate-50' }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
                 <path d="M3 6h18"></path>
@@ -36,7 +36,7 @@
         </a>
 
         <a href="{{ route('vendas.index') }}"
-            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->routeIs('vendas.index', 'vendas.show', 'vendas.edit') ? 'bg-blue-50 text-violet-400' : 'text-slate-600 hover:bg-slate-50' }}">
+            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->routeIs('vendas.index', 'vendas.show', 'vendas.edit') ? 'bg-pink-50 text-pink-400' : 'text-slate-600 hover:bg-slate-50' }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                 <path d="M10 12h11"></path>
                 <path d="M10 18h11"></path>
@@ -49,7 +49,7 @@
         </a>
 
         <a href="{{ route('aniversarios.index') }}"
-            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->routeIs('aniversarios.index') ? 'bg-blue-50 text-violet-400' : 'text-slate-600 hover:bg-slate-50' }}">
+            class="flex items-center gap-3 px-4 py-3 transition-colors rounded-lg {{ request()->routeIs('aniversarios.index') ? 'bg-pink-50 text-pink-400' : 'text-slate-600 hover:bg-slate-50' }}">
 
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                 <path d="M12 2v4" />
