@@ -5,7 +5,9 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-    .nova-venda * { box-sizing: border-box; }
+    .nova-venda * {
+        box-sizing: border-box;
+    }
 
     .nova-venda {
         min-height: 100vh;
@@ -17,7 +19,6 @@
         padding: 1.5rem 1rem 3rem;
     }
 
-    /* ── HEADER ── */
     .nv-header {
         max-width: 700px;
         margin: 0 auto 2rem;
@@ -40,6 +41,7 @@
         text-decoration: none;
         transition: all 0.2s;
     }
+
     .nv-back-btn:hover {
         background: #fdf2f8;
         border-color: #ec4899;
@@ -54,13 +56,13 @@
         margin: 0;
         line-height: 1.2;
     }
+
     .nv-title-block p {
         font-size: 0.85rem;
         color: #9ca3af;
         margin: 0.2rem 0 0;
     }
 
-    /* ── CARD ── */
     .nv-card {
         max-width: 700px;
         margin: 0 auto;
@@ -80,8 +82,11 @@
         gap: 2rem;
     }
 
-    /* ── SECTION ── */
-    .nv-section { display: flex; flex-direction: column; gap: 1rem; }
+    .nv-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 
     .nv-section-header {
         display: flex;
@@ -103,9 +108,18 @@
         border-radius: 50%;
         flex-shrink: 0;
     }
-    .dot-pink   { background: #ec4899; }
-    .dot-violet { background: #8b5cf6; }
-    .dot-emerald{ background: #10b981; }
+
+    .dot-pink {
+        background: #ec4899;
+    }
+
+    .dot-violet {
+        background: #8b5cf6;
+    }
+
+    .dot-emerald {
+        background: #10b981;
+    }
 
     .nv-section-label span {
         font-size: 0.82rem;
@@ -114,10 +128,16 @@
         text-transform: uppercase;
         color: #6b7280;
     }
-    .nv-section-label span.pink { color: #be185d; }
 
-    /* ── FIELD ── */
-    .nv-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .nv-section-label span.pink {
+        color: #be185d;
+    }
+
+    .nv-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
 
     .nv-label {
         font-size: 0.8rem;
@@ -154,19 +174,25 @@
         transition: all 0.2s;
         -webkit-appearance: none;
     }
-    .nv-input::placeholder { color: #d1b0c1; }
+
+    .nv-input::placeholder {
+        color: #d1b0c1;
+    }
+
     .nv-input:focus {
         border-color: #ec4899;
         background: white;
         box-shadow: 0 0 0 4px #ec489912;
     }
 
-    .nv-input.no-icon { padding-left: 1rem; }
+    .nv-input.no-icon {
+        padding-left: 1rem;
+    }
 
-    /* select arrow */
     .nv-select-wrap {
         position: relative;
     }
+
     .nv-select-wrap::after {
         content: '';
         position: absolute;
@@ -180,6 +206,7 @@
         border-top: 6px solid #d1a3bf;
         pointer-events: none;
     }
+
     .nv-select {
         width: 100%;
         padding: 0.7rem 2.2rem 0.7rem 1rem;
@@ -194,13 +221,13 @@
         -webkit-appearance: none;
         transition: all 0.2s;
     }
+
     .nv-select:focus {
         border-color: #ec4899;
         background: white;
         box-shadow: 0 0 0 4px #ec489912;
     }
 
-    /* ── ITEMS ── */
     .nv-item-row {
         display: grid;
         grid-template-columns: 1fr auto auto;
@@ -215,6 +242,7 @@
     .nv-price-input-wrap {
         position: relative;
     }
+
     .nv-price-prefix {
         position: absolute;
         left: 10px;
@@ -225,6 +253,7 @@
         color: #be185d;
         pointer-events: none;
     }
+
     .nv-price-input {
         width: 100%;
         padding: 0.7rem 0.6rem 0.7rem 2rem;
@@ -239,6 +268,7 @@
         transition: all 0.2s;
         -webkit-appearance: none;
     }
+
     .nv-price-input:focus {
         border-color: #ec4899;
         background: white;
@@ -259,6 +289,7 @@
         transition: all 0.2s;
         flex-shrink: 0;
     }
+
     .nv-remove-btn:hover {
         background: #fff1f5;
         color: #e11d48;
@@ -284,13 +315,13 @@
         cursor: pointer;
         transition: all 0.2s;
     }
+
     .nv-add-btn:hover {
         background: #fdf2f8;
         border-color: #ec4899;
         border-style: solid;
     }
 
-    /* ── TOGGLE ── */
     .nv-toggle-card {
         display: flex;
         align-items: center;
@@ -302,7 +333,11 @@
         cursor: pointer;
         transition: all 0.2s;
     }
-    .nv-toggle-card:hover { border-color: #f9a8d4; background: #fdf2f8; }
+
+    .nv-toggle-card:hover {
+        border-color: #f9a8d4;
+        background: #fdf2f8;
+    }
 
     .nv-toggle-icon {
         width: 38px;
@@ -316,21 +351,36 @@
         color: #be185d;
     }
 
-    .nv-toggle-text { flex: 1; }
+    .nv-toggle-text {
+        flex: 1;
+    }
+
     .nv-toggle-text strong {
         display: block;
         font-size: 0.88rem;
         font-weight: 600;
         color: #1e1b2e;
     }
+
     .nv-toggle-text span {
         font-size: 0.76rem;
         color: #9ca3af;
     }
 
-    /* toggle switch */
-    .nv-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
-    .nv-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .nv-switch {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+    }
+
+    .nv-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+
     .nv-slider {
         position: absolute;
         inset: 0;
@@ -339,6 +389,7 @@
         cursor: pointer;
         transition: background 0.25s;
     }
+
     .nv-slider::before {
         content: '';
         position: absolute;
@@ -351,10 +402,15 @@
         transition: transform 0.25s;
         box-shadow: 0 1px 4px #0000001a;
     }
-    .nv-switch input:checked + .nv-slider { background: #ec4899; }
-    .nv-switch input:checked + .nv-slider::before { transform: translateX(20px); }
 
-    /* ── TOTAL + FINANCEIRO GRID ── */
+    .nv-switch input:checked+.nv-slider {
+        background: #ec4899;
+    }
+
+    .nv-switch input:checked+.nv-slider::before {
+        transform: translateX(20px);
+    }
+
     .nv-financial-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -362,8 +418,13 @@
     }
 
     @media (max-width: 520px) {
-        .nv-financial-grid { grid-template-columns: 1fr; }
-        .nv-item-price-wrap { width: 90px; }
+        .nv-financial-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .nv-item-price-wrap {
+            width: 90px;
+        }
     }
 
     .nv-total-box {
@@ -390,11 +451,13 @@
         align-items: baseline;
         gap: 0.3rem;
     }
+
     .nv-total-currency {
         font-size: 0.9rem;
         font-weight: 700;
         color: #be185d;
     }
+
     .nv-total-amount {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.6rem;
@@ -412,7 +475,6 @@
         position: absolute;
     }
 
-    /* ── ACTIONS ── */
     .nv-actions {
         display: grid;
         grid-template-columns: 1fr auto;
@@ -420,8 +482,11 @@
         padding-top: 1.25rem;
         border-top: 1px solid #fce7f3;
     }
+
     @media (max-width: 420px) {
-        .nv-actions { grid-template-columns: 1fr; }
+        .nv-actions {
+            grid-template-columns: 1fr;
+        }
     }
 
     .nv-btn-confirm {
@@ -442,11 +507,15 @@
         box-shadow: 0 4px 18px #ec489940;
         letter-spacing: 0.02em;
     }
+
     .nv-btn-confirm:hover {
         transform: translateY(-1px);
         box-shadow: 0 6px 24px #ec489955;
     }
-    .nv-btn-confirm:active { transform: translateY(0); }
+
+    .nv-btn-confirm:active {
+        transform: translateY(0);
+    }
 
     .nv-btn-discard {
         display: flex;
@@ -465,18 +534,28 @@
         transition: all 0.2s;
         white-space: nowrap;
     }
+
     .nv-btn-discard:hover {
         border-color: #fca5a5;
         color: #ef4444;
         background: #fff5f5;
     }
 
-    /* ── ANIMATE IN ── */
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(8px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    .nv-card { animation: fadeUp 0.35s ease both; }
+
+    .nv-card {
+        animation: fadeUp 0.35s ease both;
+    }
 
     .item-row-anim {
         animation: fadeUp 0.2s ease both;
@@ -485,13 +564,13 @@
 
 <div class="nova-venda">
 
-    {{-- Header --}}
     <div class="nv-header">
         <a href="/" class="nv-back-btn" aria-label="Voltar">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+                fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
             </svg>
         </a>
         <div class="nv-title-block">
@@ -500,12 +579,10 @@
         </div>
     </div>
 
-    {{-- Card --}}
     <div class="nv-card">
         <form action="{{ route('vendas.store') }}" method="POST" class="nv-form">
             @csrf
 
-            {{-- ── CLIENTE ── --}}
             <div class="nv-section">
                 <div class="nv-section-header">
                     <div class="nv-section-label">
@@ -519,14 +596,14 @@
                     <div class="nv-input-wrap">
                         <span class="nv-input-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                                <circle cx="12" cy="7" r="4"/>
+                                fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
                             </svg>
                         </span>
                         <input type="text" name="cliente_nome" id="customerName" class="nv-input"
-                               placeholder="Ex: Maria da Silva" required>
+                            placeholder="Ex: Maria da Silva" required>
                     </div>
                 </div>
 
@@ -535,19 +612,20 @@
                     <div class="nv-input-wrap">
                         <span class="nv-input-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="5" width="18" height="14" rx="2"/>
-                                <path d="M7 9h.01"/><path d="M11 9h6"/><path d="M7 13h10"/>
+                                fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="14" rx="2" />
+                                <path d="M7 9h.01" />
+                                <path d="M11 9h6" />
+                                <path d="M7 13h10" />
                             </svg>
                         </span>
                         <input type="text" name="cpf" id="cpf" class="nv-input"
-                               placeholder="000.000.000-00">
+                            placeholder="000.000.000-00">
                     </div>
                 </div>
             </div>
 
-            {{-- ── ITENS ── --}}
             <div class="nv-section">
                 <div class="nv-section-header">
                     <div class="nv-section-label">
@@ -556,36 +634,36 @@
                     </div>
                     <button type="button" id="add-item" class="nv-add-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="3"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"/><path d="M12 5v14"/>
+                            fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="M12 5v14" />
                         </svg>
                         Adicionar
                     </button>
                 </div>
 
                 <div id="items-container" style="display:flex;flex-direction:column;gap:0.5rem;">
-                    {{-- First item row (no remove btn) --}}
                     <div class="nv-item-row item-row">
                         <div class="nv-input-wrap">
                             <span class="nv-input-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
-                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                                    <path d="M2 7h20"/>
+                                    fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                                    <path d="M2 7h20" />
                                 </svg>
                             </span>
                             <input type="text" name="items[]" class="nv-input"
-                                   placeholder="Nome da peça" required>
+                                placeholder="Nome da peça" required>
                         </div>
                         <div class="nv-item-price-wrap">
                             <div class="nv-price-input-wrap">
                                 <span class="nv-price-prefix">R$</span>
                                 <input type="number" name="item_prices[]" step="0.01"
-                                       class="item-price nv-price-input"
-                                       placeholder="0,00" required>
+                                    class="item-price nv-price-input"
+                                    placeholder="0,00" required>
                             </div>
                         </div>
                         <div class="nv-placeholder-spacer"></div>
@@ -593,7 +671,6 @@
                 </div>
             </div>
 
-            {{-- ── FINANCEIRO ── --}}
             <div class="nv-section">
                 <div class="nv-section-header">
                     <div class="nv-section-label">
@@ -602,13 +679,14 @@
                     </div>
                 </div>
 
-                {{-- Toggle pagamento flexível --}}
                 <label class="nv-toggle-card" for="is_flexivel">
                     <div class="nv-toggle-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 12V8H4v4"/><path d="M2 12h20"/><path d="M20 12v8H4v-8"/>
+                            fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 12V8H4v4" />
+                            <path d="M2 12h20" />
+                            <path d="M20 12v8H4v-8" />
                         </svg>
                     </div>
                     <div class="nv-toggle-text">
@@ -621,9 +699,7 @@
                     </label>
                 </label>
 
-                {{-- Total + parcelas --}}
                 <div class="nv-financial-grid">
-                    {{-- Total display --}}
                     <div class="nv-total-box" style="grid-column: 1 / -1;">
                         <div class="nv-total-label">Total da venda</div>
                         <div class="nv-total-value">
@@ -631,10 +707,9 @@
                             <span class="nv-total-amount" id="total-display">0,00</span>
                         </div>
                         <input type="number" name="valor_total" id="amount" step="0.01"
-                               class="nv-total-hidden" readonly>
+                            class="nv-total-hidden" readonly>
                     </div>
 
-                    {{-- Parcelas + vencimento --}}
                     <div id="container-parcelas" style="display:contents;">
                         <div class="nv-field">
                             <label class="nv-label" for="installments">Parcelas</label>
@@ -659,29 +734,29 @@
                         <div class="nv-field">
                             <label class="nv-label" for="paymentDate">1º Vencimento</label>
                             <input type="date" name="data_vencimento" id="paymentDate"
-                                   class="nv-input no-icon" required>
+                                class="nv-input no-icon" required>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- ── ACTIONS ── --}}
             <div class="nv-actions">
                 <button type="submit" class="nv-btn-confirm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                        <polyline points="17 21 17 13 7 13 7 21"/>
-                        <polyline points="7 3 7 8 15 8"/>
+                        fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
                     </svg>
                     Confirmar Venda
                 </button>
                 <a href="{{ route('vendas.index') }}" class="nv-btn-discard">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                        fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
                     </svg>
                     Descartar
                 </a>
@@ -691,46 +766,44 @@
 </div>
 
 <script>
-// ── FLEXÍVEL TOGGLE ──
-const checkFlexivel = document.getElementById('is_flexivel');
-const parcSelects   = document.querySelectorAll('#container-parcelas .nv-field');
-const inputDataVenc = document.getElementById('paymentDate');
-const parcContainer = document.getElementById('container-parcelas');
+    const checkFlexivel = document.getElementById('is_flexivel');
+    const parcSelects = document.querySelectorAll('#container-parcelas .nv-field');
+    const inputDataVenc = document.getElementById('paymentDate');
+    const parcContainer = document.getElementById('container-parcelas');
 
-checkFlexivel.addEventListener('change', function () {
-    const fields = parcContainer.querySelectorAll('.nv-field');
-    fields.forEach(f => {
-        f.style.display = this.checked ? 'none' : '';
+    checkFlexivel.addEventListener('change', function() {
+        const fields = parcContainer.querySelectorAll('.nv-field');
+        fields.forEach(f => {
+            f.style.display = this.checked ? 'none' : '';
+        });
+        inputDataVenc.required = !this.checked;
     });
-    inputDataVenc.required = !this.checked;
-});
 
-// ── TOTAL CALC ──
-const container   = document.getElementById('items-container');
-const totalInput  = document.getElementById('amount');
-const totalDisplay= document.getElementById('total-display');
+    const container = document.getElementById('items-container');
+    const totalInput = document.getElementById('amount');
+    const totalDisplay = document.getElementById('total-display');
 
-function calculateTotal() {
-    let total = 0;
-    document.querySelectorAll('.item-price').forEach(input => {
-        total += parseFloat(input.value) || 0;
+    function calculateTotal() {
+        let total = 0;
+        document.querySelectorAll('.item-price').forEach(input => {
+            total += parseFloat(input.value) || 0;
+        });
+        totalInput.value = total.toFixed(2);
+        totalDisplay.textContent = total.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    container.addEventListener('input', e => {
+        if (e.target.classList.contains('item-price')) calculateTotal();
     });
-    totalInput.value = total.toFixed(2);
-    totalDisplay.textContent = total.toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-}
 
-container.addEventListener('input', e => {
-    if (e.target.classList.contains('item-price')) calculateTotal();
-});
 
-// ── ADD ITEM ──
-document.getElementById('add-item').addEventListener('click', function () {
-    const row = document.createElement('div');
-    row.className = 'nv-item-row item-row item-row-anim';
-    row.innerHTML = `
+    document.getElementById('add-item').addEventListener('click', function() {
+        const row = document.createElement('div');
+        row.className = 'nv-item-row item-row item-row-anim';
+        row.innerHTML = `
         <div class="nv-input-wrap">
             <span class="nv-input-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
@@ -761,25 +834,25 @@ document.getElementById('add-item').addEventListener('click', function () {
             </svg>
         </button>
     `;
-    container.appendChild(row);
-});
+        container.appendChild(row);
+    });
 
-// ── REMOVE ITEM ──
-container.addEventListener('click', e => {
-    if (e.target.closest('.remove-item')) {
-        e.target.closest('.item-row').remove();
-        calculateTotal();
-    }
-});
 
-// ── CPF MASK ──
-document.getElementById('cpf').addEventListener('input', function (e) {
-    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
-    if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-    else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-    else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-    e.target.value = v;
-});
+    container.addEventListener('click', e => {
+        if (e.target.closest('.remove-item')) {
+            e.target.closest('.item-row').remove();
+            calculateTotal();
+        }
+    });
+
+
+    document.getElementById('cpf').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+        if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+        else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+        else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+        e.target.value = v;
+    });
 </script>
 
 @endsection

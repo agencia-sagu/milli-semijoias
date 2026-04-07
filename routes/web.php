@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     //parcelas
     Route::patch('/parcelas/{parcela}/pagar', [ParcelaController::class, 'pagar'])->name('parcelas.pagar');
     Route::patch('/parcelas/{parcela}/update-date', [ParcelaController::class, 'updateDate'])->name('parcelas.updateDate');
+    Route::patch('/parcelas/{parcela}/recalcular', [ParcelaController::class, 'recalcular'])->name('parcelas.recalcular');
 
     Route::get('/aniversarios', [AniversarianteController::class, 'index'])->name('aniversarios.index');
     Route::post('/clientes', [AniversarianteController::class, 'store'])->name('clientes.store');

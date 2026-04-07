@@ -17,7 +17,6 @@
         padding: 1.5rem 1rem 3rem;
     }
 
-    /* ── HEADER ── */
     .ev-header {
         max-width: 700px;
         margin: 0 auto 2rem;
@@ -60,7 +59,6 @@
         margin: 0.2rem 0 0;
     }
 
-    /* ── ALERTS ── */
     .ev-alert-wrap {
         max-width: 700px;
         margin: 0 auto 1.25rem;
@@ -89,7 +87,6 @@
         color: #92400e;
     }
 
-    /* ── CARD ── */
     .ev-card {
         max-width: 700px;
         margin: 0 auto;
@@ -110,7 +107,6 @@
         gap: 2rem;
     }
 
-    /* ── SECTION ── */
     .ev-section { display: flex; flex-direction: column; gap: 1rem; }
 
     .ev-section-header {
@@ -146,7 +142,6 @@
     }
     .ev-section-label span.pink { color: #be185d; }
 
-    /* ── FIELD ── */
     .ev-field { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .ev-label {
@@ -190,7 +185,6 @@
     }
     .ev-input.no-icon { padding-left: 1rem; }
 
-    /* select */
     .ev-select-wrap { position: relative; }
     .ev-select-wrap::after {
         content: '';
@@ -224,7 +218,6 @@
         box-shadow: 0 0 0 4px #ec489912;
     }
 
-    /* ── ITEMS ── */
     .ev-item-row {
         display: grid;
         grid-template-columns: 1fr auto auto;
@@ -303,7 +296,6 @@
         border-style: solid;
     }
 
-    /* ── TOGGLE ── */
     .ev-toggle-card {
         display: flex;
         align-items: center;
@@ -355,7 +347,6 @@
     .ev-switch input:checked + .ev-slider { background: #ec4899; }
     .ev-switch input:checked + .ev-slider::before { transform: translateX(20px); }
 
-    /* ── TOTAL DISPLAY ── */
     .ev-financial-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -396,7 +387,6 @@
     }
     .ev-total-hidden { opacity: 0; width: 0; height: 0; position: absolute; }
 
-    /* ── ACTIONS ── */
     .ev-actions {
         display: grid;
         grid-template-columns: 1fr auto;
@@ -462,7 +452,6 @@
 
 <div class="ev-page">
 
-    {{-- ── HEADER ── --}}
     <div class="ev-header">
         <a href="{{ route('vendas.index') }}" class="ev-back-btn" aria-label="Voltar">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
@@ -477,7 +466,6 @@
         </div>
     </div>
 
-    {{-- ── ALERTS ── --}}
     @if(session('error') || $errors->any())
     <div class="ev-alert-wrap">
         @if(session('error'))
@@ -503,13 +491,11 @@
     </div>
     @endif
 
-    {{-- ── CARD ── --}}
     <div class="ev-card">
         <form action="{{ route('vendas.update', $venda->id) }}" method="POST" class="ev-form">
             @csrf
             @method('PUT')
 
-            {{-- ── CLIENTE ── --}}
             <div class="ev-section">
                 <div class="ev-section-header">
                     <div class="ev-section-label">
@@ -553,7 +539,6 @@
                 </div>
             </div>
 
-            {{-- ── ITENS ── --}}
             <div class="ev-section">
                 <div class="ev-section-header">
                     <div class="ev-section-label">
@@ -619,7 +604,6 @@
                 </div>
             </div>
 
-            {{-- ── FINANCEIRO ── --}}
             <div class="ev-section">
                 <div class="ev-section-header">
                     <div class="ev-section-label">
@@ -628,7 +612,6 @@
                     </div>
                 </div>
 
-                {{-- Aviso parcela paga --}}
                 @php $temParcelaPaga = $venda->parcelas->where('pago', true)->count() > 0; @endphp
                 @if($temParcelaPaga)
                 <div class="ev-alert ev-alert-warning">
@@ -642,7 +625,6 @@
                 </div>
                 @endif
 
-                {{-- Toggle flexível --}}
                 <label class="ev-toggle-card" for="is_flexivel">
                     <div class="ev-toggle-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
@@ -662,7 +644,6 @@
                     </label>
                 </label>
 
-                {{-- Total + parcelas --}}
                 <div class="ev-financial-grid">
                     <div class="ev-total-box" style="grid-column: 1 / -1;">
                         <div class="ev-total-label">Total da venda</div>
@@ -702,7 +683,6 @@
                 </div>
             </div>
 
-            {{-- ── ACTIONS ── --}}
             <div class="ev-actions">
                 <button type="submit" class="ev-btn-save">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
@@ -728,7 +708,7 @@
 </div>
 
 <script>
-// ── FLEXÍVEL TOGGLE ──
+
 const checkFlexivel  = document.getElementById('is_flexivel');
 const fieldParcelas  = document.getElementById('field-parcelas');
 const fieldVencimento= document.getElementById('field-vencimento');
@@ -741,7 +721,6 @@ checkFlexivel.addEventListener('change', function () {
     inputDataVenc.required        = !hide;
 });
 
-// ── TOTAL CALC ──
 const container    = document.getElementById('items-container');
 const totalInput   = document.getElementById('amount');
 const totalDisplay = document.getElementById('total-display');
@@ -762,7 +741,6 @@ container.addEventListener('input', e => {
     if (e.target.classList.contains('item-price')) calculateTotal();
 });
 
-// ── ADD ITEM ──
 document.getElementById('add-item').addEventListener('click', function () {
     const row = document.createElement('div');
     row.className = 'ev-item-row item-row ev-item-anim';
@@ -800,7 +778,6 @@ document.getElementById('add-item').addEventListener('click', function () {
     container.appendChild(row);
 });
 
-// ── REMOVE ITEM ──
 container.addEventListener('click', e => {
     if (e.target.closest('.remove-item')) {
         e.target.closest('.item-row').remove();
@@ -808,7 +785,6 @@ container.addEventListener('click', e => {
     }
 });
 
-// ── CPF MASK ──
 document.getElementById('cpf').addEventListener('input', function (e) {
     let v = e.target.value.replace(/\D/g, '').slice(0, 11);
     if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');

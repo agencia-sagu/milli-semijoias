@@ -12,6 +12,7 @@ return new class extends Migration
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
             $table->string('cliente_nome');
+            $table->string('cpf')->nullable();
             $table->string('item');
             $table->decimal('valor_total', 10, 2);
             $table->json('item_prices')->nullable();
