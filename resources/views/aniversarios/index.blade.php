@@ -1,138 +1,458 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- O x-data precisa envolver tudo que vai usar o estado 'open' --}}
-<div class="p-4 lg:p-8 max-w-7xl mx-auto" x-data="{ open: false }">
 
-    {{-- HEADER --}}
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+    .an-page * { box-sizing: border-box; }
+
+    .an-page {
+        min-height: 100vh;
+        background: #fdf6f9;
+        background-image:
+            radial-gradient(ellipse at 0% 0%, #fce7f3 0%, transparent 50%),
+            radial-gradient(ellipse at 100% 100%, #fdf2f8 0%, transparent 50%);
+        font-family: 'DM Sans', sans-serif;
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    /* ── HEADER ── */
+    .an-header {
+        max-width: 960px;
+        margin: 0 auto 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .an-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        color: #1e1b2e;
+        margin: 0; line-height: 1.2;
+    }
+    .an-header p { font-size: 0.83rem; color: #9ca3af; margin: 0.2rem 0 0; }
+
+    .an-new-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.7rem 1.2rem;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        color: white;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.25s;
+        box-shadow: 0 4px 16px #ec489938;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    .an-new-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 22px #ec489950; }
+
+    /* ── GRID HOJE + PRÓXIMOS ── */
+    .an-top-grid {
+        max-width: 960px;
+        margin: 0 auto 2rem;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1.25rem;
+    }
+    @media (max-width: 700px) {
+        .an-top-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SECTION LABEL ── */
+    .an-section-label {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.85rem;
+    }
+    .an-section-label.pink { color: #be185d; }
+    .an-section-label.grey { color: #9ca3af; }
+
+    .an-ping-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #ec4899;
+        position: relative;
+        flex-shrink: 0;
+    }
+    .an-ping-dot::after {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: 50%;
+        background: #ec489940;
+        animation: pingAnim 1.5s ease-in-out infinite;
+    }
+    @keyframes pingAnim {
+        0%, 100% { transform: scale(1); opacity: 0.7; }
+        50%       { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* ── CARD ANIVERSÁRIO HOJE ── */
+    .an-hoje-card {
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        border-radius: 18px;
+        padding: 1.25rem 1.3rem;
+        box-shadow: 0 6px 24px #ec489938;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 0.75rem;
+        animation: fadeUp 0.3s ease both;
+    }
+    .an-hoje-card-name {
+        font-weight: 700;
+        font-size: 1rem;
+        color: white;
+        margin: 0 0 0.2rem;
+    }
+    .an-hoje-card-age { font-size: 0.82rem; color: #fce7f3; margin: 0 0 0.8rem; }
+    .an-hoje-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.75rem;
+        background: rgba(255,255,255,0.2);
+        border-radius: 8px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        backdrop-filter: blur(4px);
+    }
+    .an-hoje-deco {
+        position: absolute;
+        right: -12px; bottom: -12px;
+        font-size: 4rem;
+        opacity: 0.12;
+        pointer-events: none;
+        line-height: 1;
+    }
+
+    .an-empty {
+        background: white;
+        border: 1.5px dashed #fbc6d8;
+        border-radius: 16px;
+        padding: 2rem 1rem;
+        text-align: center;
+        color: #c9a0b8;
+        font-size: 0.83rem;
+    }
+
+    /* ── PRÓXIMOS CARD ── */
+    .an-card {
+        background: white;
+        border-radius: 20px;
+        border: 1.5px solid #fce7f3;
+        box-shadow: 0 4px 20px #be185d08;
+        overflow: hidden;
+        animation: fadeUp 0.3s ease both;
+    }
+
+    .an-mes-table { width: 100%; border-collapse: collapse; }
+    .an-mes-table tbody tr { border-bottom: 1px solid #fdf2f8; transition: background 0.15s; }
+    .an-mes-table tbody tr:last-child { border-bottom: none; }
+    .an-mes-table tbody tr:hover { background: #fffbfd; }
+    .an-mes-table td { padding: 0.8rem 1.1rem; font-size: 0.88rem; color: #374151; }
+    .an-mes-table .td-name { font-weight: 600; color: #1e1b2e; }
+    .an-mes-table .td-day { text-align: center; }
+
+    .an-day-chip {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 42px; height: 42px;
+        border-radius: 12px;
+        background: #fce7f3;
+        transition: background 0.2s;
+    }
+    .an-mes-table tbody tr:hover .an-day-chip { background: #fdf2f8; }
+    .an-day-chip-label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #c9a0b8; }
+    .an-day-chip-num   { font-size: 0.9rem; font-weight: 800; color: #be185d; line-height: 1; }
+
+    /* ── BASE GERAL ── */
+    .an-section-wrap { max-width: 960px; margin: 0 auto; }
+
+    .an-section-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.85rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .an-count-badge {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #c9a0b8;
+        background: #fce7f3;
+        padding: 0.25rem 0.7rem;
+        border-radius: 8px;
+    }
+
+    .an-table { width: 100%; border-collapse: collapse; }
+    .an-table thead tr {
+        background: #fffbfd;
+        border-bottom: 1.5px solid #fce7f3;
+    }
+    .an-table thead th {
+        padding: 0.85rem 1.25rem;
+        font-size: 0.68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #c9a0b8;
+        text-align: left;
+    }
+    .an-table thead th.center { text-align: center; }
+    .an-table thead th.right  { text-align: right; }
+
+    .an-table tbody tr { border-bottom: 1px solid #fdf2f8; transition: background 0.15s; }
+    .an-table tbody tr:last-child { border-bottom: none; }
+    .an-table tbody tr:hover { background: #fffbfd; }
+    .an-table td { padding: 0.85rem 1.25rem; font-size: 0.88rem; color: #374151; }
+    .an-table td.center { text-align: center; }
+    .an-table td.right  { text-align: right; }
+
+    .an-td-name { font-weight: 600; color: #1e1b2e; }
+
+    .an-age-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.65rem;
+        border-radius: 8px;
+        background: #fce7f3;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #be185d;
+    }
+
+    .an-del-btn {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        border: none;
+        background: transparent;
+        color: #d1a3bf;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    .an-del-btn:hover { background: #fee2e2; color: #dc2626; }
+
+    .an-table-empty {
+        padding: 3rem 1rem;
+        text-align: center;
+        color: #c9a0b8;
+        font-size: 0.85rem;
+    }
+
+    /* ── MODAL ── */
+    .an-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        background: #1e1b2e88;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+    .an-modal-overlay.open { display: flex; }
+
+    .an-modal {
+        background: white;
+        border-radius: 22px;
+        box-shadow: 0 20px 60px #be185d22, 0 0 0 1px #fce7f3;
+        width: 100%;
+        max-width: 380px;
+        overflow: hidden;
+        animation: fadeUp 0.22s ease both;
+    }
+
+    .an-modal-head {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid #fce7f3;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .an-modal-head h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.15rem;
+        color: #1e1b2e;
+        margin: 0 0 0.15rem;
+    }
+    .an-modal-head p { font-size: 0.78rem; color: #9ca3af; margin: 0; }
+
+    .an-modal-close {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        border: none;
+        background: transparent;
+        color: #c9a0b8;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+    }
+    .an-modal-close:hover { background: #fce7f3; color: #be185d; }
+
+    .an-modal-body {
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .an-modal-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .an-modal-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #374151;
+        letter-spacing: 0.02em;
+    }
+    .an-modal-input {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border-radius: 12px;
+        border: 1.5px solid #fce7f3;
+        background: #fffbfd;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.9rem;
+        color: #1e1b2e;
+        outline: none;
+        transition: all 0.2s;
+        -webkit-appearance: none;
+    }
+    .an-modal-input::placeholder { color: #d1b0c1; }
+    .an-modal-input:focus { border-color: #ec4899; background: white; box-shadow: 0 0 0 4px #ec489912; }
+
+    .an-modal-foot {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #fce7f3;
+        background: #fffbfd;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.6rem;
+    }
+    .an-modal-cancel {
+        background: none; border: none;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.85rem; font-weight: 600;
+        color: #9ca3af; cursor: pointer;
+        padding: 0.5rem 0.75rem;
+        border-radius: 10px;
+        transition: all 0.2s;
+    }
+    .an-modal-cancel:hover { color: #6b7280; background: #f3f4f6; }
+
+    .an-modal-submit {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.65rem 1.2rem;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #ec4899, #be185d);
+        color: white;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.85rem; font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 3px 12px #ec489930;
+    }
+    .an-modal-submit:hover { transform: translateY(-1px); box-shadow: 0 5px 18px #ec489945; }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="an-page">
+
+    {{-- ── HEADER ── --}}
+    <div class="an-header">
         <div>
-            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Aniversariantes</h1>
-            <p class="text-slate-500 text-sm">Gestão de clientes e datas especiais da Milli Semijóias</p>
+            <h1>Aniversariantes</h1>
+            <p>Gestão de clientes e datas especiais</p>
         </div>
-
-        <button @click="open = true" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-pink-600 text-white rounded-xl font-bold text-sm hover:bg-pink-700 transition-all shadow-lg shadow-pink-100 group">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:rotate-90 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        <button class="an-new-btn" onclick="document.getElementById('modalCadastro').classList.add('open')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="3"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"/><path d="M12 5v14"/>
             </svg>
             Cadastrar Cliente
         </button>
     </div>
 
-    {{-- GRID PRINCIPAL --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    {{-- ── HOJE + PRÓXIMOS ── --}}
+    <div class="an-top-grid">
 
-        {{-- COLUNA: HOJE --}}
-        <div class="lg:col-span-1 space-y-4">
-            <h2 class="text-sm font-black uppercase tracking-widest text-pink-600 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-pink-600 animate-ping"></span>
-                Hoje ({{ now()->format('d/m') }})
-            </h2>
+        {{-- Hoje --}}
+        <div>
+            <div class="an-section-label pink">
+                <span class="an-ping-dot"></span>
+                Hoje — {{ now()->format('d/m') }}
+            </div>
 
             @forelse($aniversariantesHoje as $cliente)
-            <div class="bg-gradient-to-br from-pink-600 to-pink-700 p-6 rounded-2xl shadow-xl shadow-pink-100 relative overflow-hidden group">
-                <div class="relative z-10">
-                    <h3 class="text-white font-bold text-lg">{{ $cliente->nome }}</h3>
-                    <p class="text-pink-100 text-sm mb-4">Completando {{ $cliente->data_nascimento->age }} anos!</p>
-
-                    {{-- Note: Removi o link de WhatsApp pois você informou que removeu o campo --}}
-                    <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 text-white rounded-xl text-xs font-black uppercase backdrop-blur-sm">
-                        🎉 Dia de Festa!
-                    </span>
-                </div>
-                <svg class="absolute -right-4 -bottom-4 text-white/10 w-24 h-24 rotate-12 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
+            <div class="an-hoje-card">
+                <p class="an-hoje-card-name">{{ $cliente->nome }}</p>
+                <p class="an-hoje-card-age">Completando {{ $cliente->data_nascimento->age }} anos! 🎂</p>
+                <span class="an-hoje-badge">🎉 Dia de Festa!</span>
+                <div class="an-hoje-deco">🎂</div>
             </div>
             @empty
-            <div class="bg-white border-2 border-dashed border-slate-200 p-8 rounded-2xl text-center">
-                <p class="text-slate-400 text-sm">Nenhum aniversário hoje.</p>
-            </div>
+            <div class="an-empty">Nenhum aniversário hoje.</div>
             @endforelse
         </div>
 
-        {{-- COLUNA: PRÓXIMOS --}}
-        <div class="lg:col-span-2 space-y-4">
-            <h2 class="text-sm font-black uppercase tracking-widest text-slate-400">Próximos do Mês</h2>
-
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <table class="w-full border-collapse">
-                    <tbody class="divide-y divide-slate-100">
+        {{-- Próximos do mês --}}
+        <div>
+            <div class="an-section-label grey">Próximos do Mês</div>
+            <div class="an-card">
+                <table class="an-mes-table">
+                    <tbody>
                         @forelse($aniversariantesMes as $cliente)
-                        <tr class="hover:bg-slate-50 transition-all group">
-                            <td class="px-6 py-4">
-                                <span class="font-bold text-slate-900">{{ $cliente->nome }}</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="inline-flex flex-col items-center justify-center w-12 h-12 bg-slate-100 rounded-xl group-hover:bg-pink-50 transition-colors">
-                                    <span class="text-[10px] font-black uppercase text-slate-400 group-hover:text-pink-600">Dia</span>
-                                    <span class="text-sm font-black text-slate-900 group-hover:text-pink-600">{{ $cliente->data_nascimento->format('d') }}</span>
+                        <tr>
+                            <td class="td-name">{{ $cliente->nome }}</td>
+                            <td class="td-day">
+                                <span class="an-day-chip">
+                                    <span class="an-day-chip-label">Dia</span>
+                                    <span class="an-day-chip-num">{{ $cliente->data_nascimento->format('d') }}</span>
                                 </span>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td class="px-6 py-8 text-center text-slate-400 text-sm">Sem mais aniversariantes este mês.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    {{-- LISTA GERAL DE CLIENTES --}}
-    <div class="mt-12">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-sm font-black uppercase tracking-widest text-slate-400">Base Geral de Clientes</h2>
-            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-lg">
-                {{ $todosClientes->count() }} cadastrados
-            </span>
-        </div>
-
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr class="bg-slate-50 border-b border-slate-100 text-left">
-                            <th class="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-wider">Nome da Cliente</th>
-                            <th class="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-wider text-center">Data de Nascimento</th>
-                            <th class="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-wider text-center">Idade</th>
-                            <th class="px-6 py-4 text-[10px] font-black uppercase text-slate-400 tracking-wider text-right">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        @forelse($todosClientes as $cliente)
-                        <tr class="hover:bg-slate-50/80 transition-all">
-                            <td class="px-6 py-4">
-                                <span class="font-semibold text-slate-900">{{ $cliente->nome }}</span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="text-sm text-slate-600">
-                                    {{ $cliente->data_nascimento->format('d/m/Y') }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-center">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800">
-                                    {{ $cliente->data_nascimento->age }} anos
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" onsubmit="return confirm('Deseja realmente excluir esta cliente?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="p-2 text-slate-300 hover:text-red-600 transition-colors">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-12 text-center">
-                                <p class="text-slate-400 text-sm">Nenhuma cliente cadastrada na base.</p>
+                            <td colspan="2" style="padding:2.5rem 1rem;text-align:center;color:#c9a0b8;font-size:0.83rem;">
+                                Sem mais aniversariantes este mês.
                             </td>
                         </tr>
                         @endforelse
@@ -142,46 +462,116 @@
         </div>
     </div>
 
-    {{-- MODAL DE CADASTRO --}}
-    <div x-show="open"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 scale-95"
-        x-transition:enter-end="opacity-100 scale-100"
-        x-cloak>
+    {{-- ── BASE GERAL ── --}}
+    <div class="an-section-wrap">
+        <div class="an-section-top">
+            <div class="an-section-label grey" style="margin:0">Base Geral de Clientes</div>
+            <span class="an-count-badge">{{ $todosClientes->count() }} cadastradas</span>
+        </div>
 
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden" @click.away="open = false">
-            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-black text-slate-900 uppercase tracking-tight">Nova Cliente</h3>
-                <button @click="open = false" class="text-slate-400 hover:text-slate-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <form action="{{ route('clientes.store') }}" method="POST" class="p-6 space-y-4">
-                @csrf
-                <div>
-                    <label class="block text-xs font-black uppercase text-slate-500 mb-1 ml-1">Nome Completo</label>
-                    <input type="text" name="nome" required placeholder="Ex: Maria Oliveira"
-                        class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition-all text-slate-900 font-medium">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-black uppercase text-slate-500 mb-1 ml-1">Data de Nascimento</label>
-                    <input type="date" name="data_nascimento" required
-                        class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition-all text-slate-900 font-medium">
-                </div>
-
-                <div class="pt-2">
-                    <button type="submit" class="w-full py-4 bg-pink-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-pink-700 transition-all shadow-lg shadow-pink-200">
-                        Salvar Cliente
-                    </button>
-                </div>
-            </form>
+        <div class="an-card">
+            <table class="an-table">
+                <thead>
+                    <tr>
+                        <th>Nome da Cliente</th>
+                        <th class="center">Nascimento</th>
+                        <th class="center">Idade</th>
+                        <th class="right">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($todosClientes as $cliente)
+                    <tr>
+                        <td><span class="an-td-name">{{ $cliente->nome }}</span></td>
+                        <td class="center">{{ $cliente->data_nascimento->format('d/m/Y') }}</td>
+                        <td class="center">
+                            <span class="an-age-chip">{{ $cliente->data_nascimento->age }} anos</span>
+                        </td>
+                        <td class="right">
+                            <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST"
+                                  style="display:inline"
+                                  onsubmit="return confirm('Deseja excluir esta cliente?')">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="an-del-btn" title="Excluir">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 6h18"/>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                        <line x1="10" x2="10" y1="11" y2="17"/>
+                                        <line x1="14" x2="14" y1="11" y2="17"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4" class="an-table-empty">Nenhuma cliente cadastrada na base.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 
 </div>
+
+{{-- ── MODAL CADASTRO ── --}}
+<div id="modalCadastro" class="an-modal-overlay">
+    <div class="an-modal">
+        <div class="an-modal-head">
+            <div>
+                <h3>Nova Cliente</h3>
+                <p>Preencha os dados para cadastrar</p>
+            </div>
+            <button class="an-modal-close" onclick="document.getElementById('modalCadastro').classList.remove('open')" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <form action="{{ route('clientes.store') }}" method="POST">
+            @csrf
+            <div class="an-modal-body">
+                <div class="an-modal-field">
+                    <label class="an-modal-label" for="nome">Nome completo</label>
+                    <input type="text" name="nome" id="nome" required
+                           class="an-modal-input" placeholder="Ex: Maria Oliveira">
+                </div>
+                <div class="an-modal-field">
+                    <label class="an-modal-label" for="data_nascimento">Data de nascimento</label>
+                    <input type="date" name="data_nascimento" id="data_nascimento" required
+                           class="an-modal-input">
+                </div>
+            </div>
+            <div class="an-modal-foot">
+                <button type="button" class="an-modal-cancel"
+                        onclick="document.getElementById('modalCadastro').classList.remove('open')">
+                    Cancelar
+                </button>
+                <button type="submit" class="an-modal-submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2.5"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                    Salvar Cliente
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// fechar ao clicar fora do modal
+document.getElementById('modalCadastro').addEventListener('click', function (e) {
+    if (e.target === this) this.classList.remove('open');
+});
+</script>
+
 @endsection

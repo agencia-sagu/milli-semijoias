@@ -1,161 +1,249 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-4 lg:p-8">
-    <div class="space-y-6">
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+    .db-page * { box-sizing: border-box; }
+
+    .db-page {
+        min-height: 100vh;
+        background: #fdf6f9;
+        background-image:
+            radial-gradient(ellipse at 0% 0%, #fce7f3 0%, transparent 50%),
+            radial-gradient(ellipse at 100% 100%, #fdf2f8 0%, transparent 50%);
+        font-family: 'DM Sans', sans-serif;
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    /* ── HEADER ── */
+    .db-header {
+        max-width: 1100px;
+        margin: 0 auto 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .db-header h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        color: #1e1b2e;
+        margin: 0; line-height: 1.2;
+    }
+    .db-header p { font-size: 0.9rem; color: #9ca3af; margin: 0.3rem 0 0; }
+
+    /* ── GRID DE STATS ── */
+    .db-stats-grid {
+        max-width: 1100px;
+        margin: 0 auto 2.5rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .db-stat-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        border: 1.5px solid #fce7f3;
+        box-shadow: 0 4px 20px #be185d05;
+        transition: transform 0.2s;
+    }
+    .db-stat-card:hover { transform: translateY(-3px); }
+
+    .db-stat-card.primary {
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        border: none;
+        color: white;
+        box-shadow: 0 8px 25px #ec489930;
+    }
+
+    .db-stat-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-bottom: 0.5rem; }
+    .primary .db-stat-label { color: #fce7f3; }
+
+    .db-stat-value { font-size: 1.6rem; font-weight: 700; color: #1e1b2e; margin: 0; }
+    .primary .db-stat-value { color: white; }
+
+    .db-stat-sub { font-size: 0.75rem; color: #9ca3af; margin-top: 0.4rem; }
+    .primary .db-stat-sub { color: #fce7f3; opacity: 0.9; }
+
+    /* ── SECTIONS ── */
+    .db-section-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 900px) { .db-section-wrap { grid-template-columns: 1fr; } }
+
+    .db-section-label {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+        color: #be185d;
+    }
+
+    .db-card {
+        background: white;
+        border-radius: 22px;
+        border: 1.5px solid #fce7f3;
+        box-shadow: 0 4px 20px #be185d08;
+        overflow: hidden;
+    }
+
+    /* ── LISTS / TABLES ── */
+    .db-table { width: 100%; border-collapse: collapse; }
+    .db-table tr { border-bottom: 1px solid #fdf2f8; transition: background 0.15s; }
+    .db-table tr:last-child { border-bottom: none; }
+    .db-table tr:hover { background: #fffbfd; }
+    .db-table td { padding: 1rem 1.25rem; font-size: 0.85rem; }
+
+    .name-link { font-weight: 600; color: #ec4899; text-decoration: none; }
+    .name-link:hover { text-decoration: underline; }
+
+    .date-badge { font-size: 0.65rem; text-transform: uppercase; color: #9ca3af; display: block; margin-top: 2px; }
+    .price-tag { font-weight: 700; color: #1e1b2e; text-align: right; }
+    .price-tag.red { color: #dc2626; }
+
+    .status-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #ec4899;
+        display: inline-block;
+        position: relative;
+    }
+    .status-dot.ping::after {
+        content: '';
+        position: absolute; inset: -3px;
+        border-radius: 50%; background: #ec489940;
+        animation: db-ping 1.5s ease-in-out infinite;
+    }
+    @keyframes db-ping {
+        0%, 100% { transform: scale(1); opacity: 0.7; }
+        50% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .empty-state { padding: 3rem 1.5rem; text-align: center; color: #c9a0b8; font-size: 0.85rem; font-style: italic; }
+
+</style>
+
+<div class="db-page">
+
+    {{-- ── HEADER ── --}}
+    <div class="db-header">
         <div>
-            <h1 class="text-2xl font-bold text-slate-900">Dashboard</h1>
-            <p class="text-slate-600 mt-1">Resumo das vendas e pagamentos</p>
+            <h1>Dashboard</h1>
+            <p>Bem-vinda de volta! Aqui está o resumo financeiro.</p>
+        </div>
+        <div class="flex items-center gap-3">
+             <span class="an-count-badge" style="background: #fce7f3; color: #be185d; padding: 0.5rem 1rem; border-radius: 12px; font-weight: 700; font-size: 0.8rem;">
+                {{ now()->format('d/m/Y') }}
+             </span>
+        </div>
+    </div>
+
+    {{-- ── TOP STATS ── --}}
+    <div class="db-stats-grid">
+        {{-- Vendas Hoje --}}
+        <div class="db-stat-card primary">
+            <p class="db-stat-label">Vendas Hoje</p>
+            <p class="db-stat-value">R$ {{ number_format($valorVendasHoje, 2, ',', '.') }}</p>
+            <p class="db-stat-sub">{{ $vendasHoje }} transações realizadas</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white rounded-lg p-6 border border-slate-200">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-slate-600">Vendas Hoje</p>
-                        <p class="text-2xl font-bold text-slate-900 mt-1">R$ {{ number_format($valorVendasHoje, 2, ',', '.') }}</p>
-                        <p class="text-xs text-slate-500 mt-1">{{ $vendasHoje }} vendas</p>
-                    </div>
-                    <div class="bg-blue-50 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-violet-400">
-                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                            <polyline points="16 7 22 7 22 13"></polyline>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+        {{-- Pendente --}}
+        <div class="db-stat-card">
+            <p class="db-stat-label">Total Pendente</p>
+            <p class="db-stat-value" style="color: #d97706;">R$ {{ number_format($valorPendente, 2, ',', '.') }}</p>
+            <p class="db-stat-sub">{{ $parcelasPendentes }} parcelas a receber</p>
+        </div>
 
-            <div class="bg-white rounded-lg p-6 border border-slate-200">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-slate-600">Pendente</p>
-                        <p class="text-2xl font-bold text-amber-600 mt-1">R$ {{ number_format($valorPendente, 2, ',', '.') }}</p>
-                        <p class="text-xs text-slate-500 mt-1">
-                            {{ $parcelasPendentes }} parcelas a receber
-                        </p>
-                    </div>
-                    <div class="bg-amber-50 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-amber-600">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+        {{-- Atrasado --}}
+        <div class="db-stat-card">
+            <p class="db-stat-label">Em Atraso</p>
+            <p class="db-stat-value" style="color: #dc2626;">R$ {{ number_format($valorAtrasado, 2, ',', '.') }}</p>
+            <p class="db-stat-sub">{{ $pagamentoAtrasado }} clientes inadimplentes</p>
+        </div>
 
-            <div class="bg-white rounded-lg p-6 border border-slate-200">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-slate-600">Atrasado</p>
-                        <p class="text-2xl font-bold text-red-600 mt-1">R$ {{ number_format($valorAtrasado, 2, ',', '.') }}</p>
-                        <p class="text-xs text-slate-500 mt-1">
-                            {{ $pagamentoAtrasado }} pagamentos atrasados
-                        </p>
-                    </div>
-                    <div class="bg-red-50 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-red-600">
-                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
-                            <path d="M12 9v4"></path>
-                            <path d="M12 17h.01"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+        {{-- Vence Hoje --}}
+        <div class="db-stat-card">
+            <p class="db-stat-label">Vence Hoje</p>
+            <p class="db-stat-value">{{ $venceHoje }}</p>
+            <p class="db-stat-sub">pagamentos aguardados</p>
+        </div>
+    </div>
 
-            <div class="bg-white rounded-lg p-6 border border-slate-200">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-slate-600">Vence Hoje</p>
-                        <p class="text-2xl font-bold text-slate-900 mt-1">{{ $venceHoje }}</p>
-                        <p class="text-xs text-slate-500 mt-1">pagamentos</p>
-                    </div>
-                    <div class="bg-purple-50 p-3 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-600">
-                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
-                            <path d="m9 11 3 3L22 4"></path>
-                        </svg>
-                    </div>
-                </div>
+    {{-- ── NOTIFICAÇÕES / LISTAS ── --}}
+    <div class="db-section-wrap">
+
+        {{-- Coluna: Atrasados --}}
+        <div>
+            <div class="db-section-label">
+                <span class="status-dot ping" style="background: #dc2626;"></span>
+                Pagamentos Atrasados
+            </div>
+            <div class="db-card">
+                <table class="db-table">
+                    <tbody>
+                        @forelse ($atrasado as $venda)
+                            @foreach ($venda->parcelas as $parcela)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('vendas.show', $venda->id) }}" class="name-link">
+                                        {{ $venda->cliente_nome }}
+                                    </a>
+                                    <span class="date-badge">Venceu em {{ $parcela->data_vencimento->format('d/m/Y') }}</span>
+                                </td>
+                                <td class="price-tag red">
+                                    R$ {{ number_format($parcela->valor, 2, ',', '.') }}
+                                </td>
+                            </tr>
+                            @endforeach
+                        @empty
+                            <tr><td class="empty-state">Nenhum pagamento atrasado.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-slate-200">
-            <div class="p-6 border-b border-slate-200">
-                <h2 class="font-semibold text-slate-900">Notificações</h2>
+        {{-- Coluna: Vencendo em breve --}}
+        <div>
+            <div class="db-section-label">
+                <span class="status-dot" style="background: #ec4899;"></span>
+                Vencendo nos próximos 7 dias
             </div>
-            <div class="divide-y divide-slate-200">
-
-                <div class="p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="bg-red-100 p-2 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-red-600">
-                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
-                                <path d="M12 9v4"></path>
-                                <path d="M12 17h.01"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-medium text-slate-900">Pagamentos atrasados</p>
-                            <p class="text-sm text-slate-600 mt-1">{{ $pagamentoAtrasado }} pagamento(s) em atraso</p>
-                            <div class="mt-4 space-y-3">
-                                @foreach ($atrasado as $venda)
-                                @foreach ($venda->parcelas as $parcela) {{-- Mostra cada parcela atrasada do cliente --}}
-                                <div class="flex items-center justify-between text-sm bg-slate-50 p-2 rounded border border-slate-100">
-                                    <div class="flex flex-col">
-                                        <a class="text-violet-400 hover:underline font-medium" href="{{ route('vendas.show', $venda->id) }}">
-                                            {{ $venda->cliente_nome }}
-                                        </a>
-                                        <span class="text-[10px] text-slate-400 uppercase">Venceu em {{ $parcela->data_vencimento->format('d/m/Y') }}</span>
-                                    </div>
-                                    <span class="font-bold text-red-600">R$ {{ number_format($parcela->valor, 2, ',', '.') }}</span>
-                                </div>
-                                @endforeach
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="bg-amber-100 p-2 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-amber-600">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-medium text-pink-500">Vencendo em breve</p>
-                            <p class="text-sm text-slate-600 mt-1">
-                                {{ $vencendoEmBreve->count() }} pagamento(s) vencem nos próximos 7 dias
-                            </p>
-
-                            <div class="mt-4 space-y-2">
-                                @forelse ($vencendoEmBreve as $parcela)
-                                @php
+            <div class="db-card">
+                <table class="db-table">
+                    <tbody>
+                        @forelse ($vencendoEmBreve as $parcela)
+                            @php
                                 $diasRestantes = now()->startOfDay()->diffInDays($parcela->data_vencimento);
-                                @endphp
-                                <div class="flex items-center justify-between text-sm bg-slate-50 p-2 rounded border border-slate-100">
-                                    <a class="text-pink-400 hover:underline font-medium" href="{{ route('vendas.show', $parcela->venda_id) }}">
+                            @endphp
+                            <tr>
+                                <td>
+                                    <a href="{{ route('vendas.show', $parcela->venda_id) }}" class="name-link" style="color: #1e1b2e;">
                                         {{ $parcela->venda->cliente_nome }}
                                     </a>
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-slate-500">
-                                            {{ $diasRestantes == 1 ? 'Amanhã' : "em $diasRestantes dias" }}
-                                        </span>
-                                        <span class="font-bold text-slate-900">R$ {{ number_format($parcela->valor, 2, ',', '.') }}</span>
-                                    </div>
-                                </div>
-                                @empty
-                                <p class="text-xs text-slate-400 italic">Nenhum pagamento previsto para os próximos dias.</p>
-                                @endforelse
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                    <span class="date-badge" style="color: #be185d; font-weight: 600;">
+                                        {{ $diasRestantes == 0 ? 'Vence hoje' : ($diasRestantes == 1 ? 'Vence amanhã' : "Em $diasRestantes dias") }}
+                                    </span>
+                                </td>
+                                <td class="price-tag">
+                                    R$ {{ number_format($parcela->valor, 2, ',', '.') }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td class="empty-state">Tudo em dia por aqui!</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
+
     </div>
 </div>
 
