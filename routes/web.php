@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/vendas/{venda}', [VendaController::class, 'destroy'])->name('vendas.excluir');
     Route::get('/vendas/{venda}/edit', [VendaController::class, 'edit'])->name('vendas.edit');
     Route::put('/vendas/{venda}', [VendaController::class, 'update'])->name('vendas.update');
+    Route::post('/vendas/{venda}/adicionar-itens', [VendaController::class, 'adicionarItens'])->name('vendas.adicionar-itens');
 
     //notificações
     Route::get('/notificacoes', [AdminController::class, 'notificacoes'])->name('notificacoes.index');

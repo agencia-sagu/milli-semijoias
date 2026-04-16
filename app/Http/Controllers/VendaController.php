@@ -235,4 +235,54 @@ class VendaController extends Controller
                 ->with('success', 'Venda atualizada com sucesso!');
         });
     }
+
+    public function adicionarItens(Request $request, Venda $venda)
+    {
+        $request->validate([
+            'novos_items' => 'required|array|min:1',
+            'novos_item_prices' => 'required|array|min:1',
+        ]);
+
+        return DB::transaction(function () use ($request, $venda) {
+            $valorNovosItens = array_sum($request->novos_item_prices);
+
+            $itensAtuais = explode(', ', $venda->item);
+            $precosAtuais = is_array($venda->item_prices) ? $venda->item_prices : json_decode($venda->item_prices, true) ?? [];
+
+            $novosItensLista = array_merge($itensAtuais, $request->novos_items);
+            $novosPrecosLista = array_merge($precosAtuais, $request->novos_item_prices);
+
+            $venda->update([
+                'item' => implode(', ', $novosItensLista),
+                'item_prices' => $novosPrecosLista,
+                'valor_total' => $venda->valor_total + $valorNovosItens
+            ]);
+
+            $parcelasAbertas = $venda->parcelas()
+                ->where('pago', false)
+                ->orderBy('numero_parcela', 'asc')
+                ->get();
+
+            $totalParcelasAbertas = $parcelasAbertas->count();
+
+            if ($totalParcelasAbertas > 0) {
+                $valorPorParcela = $valorNovosItens / $totalParcelasAbertas;
+
+                foreach ($parcelasAbertas as $parcela) {
+                    $parcela->update([
+                        'valor' => $parcela->valor + $valorPorParcela
+                    ]);
+                }
+            } else {
+                $venda->parcelas()->create([
+                    'numero_parcela' => $venda->parcelas()->max('numero_parcela') + 1,
+                    'valor' => $valorNovosItens,
+                    'data_vencimento' => now()->addMonth(), 
+                    'pago' => false,
+                ]);
+            }
+
+            return back()->with('success', 'Itens adicionados e valores diluídos nas parcelas restantes!');
+        });
+    }
 }
